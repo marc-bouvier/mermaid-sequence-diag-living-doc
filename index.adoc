@@ -3,6 +3,8 @@
 Sample of code that generates mermaidjs sequence diagram.
 During the execution of the code, if a specific logger configuration is enabled, the program will output logs that can be interpreted as sequence diagram in mermaidjs.
 
+Sample repository : https://github.com/marc-bouvier/mermaid-sequence-diag-living-doc
+
 == Running tests
 
 === Run tests with mermaid output
@@ -172,3 +174,4 @@ Why logging mermaid in `"TRACE"` log level?
 Because in the standard logger, we may not want to output the mermaid logs.
 We could filter them out if we want, or enable them in production.
 
+Sample repository : https://github.com/marc-bouvier/mermaid-sequence-diag-living-doc
