@@ -149,9 +149,10 @@ MyApi -->> Front : 200 OK
 
 === Logging configuration
 
-In this example we have 2 separate Logback logger configurations.
-- A standard one : `src/test/resources/logback-test.xml`
-- A specific for mermaid diagram generation : `src/test/resources/logback-mermaid.xml`
+In this example we have 2 separate Logback logger configurations
+
+* A standard one : `src/test/resources/logback-test.xml`
+* A specific for mermaid diagram generation : `src/test/resources/logback-mermaid.xml`
 
 `logback-mermaid.xml`
 
@@ -161,9 +162,10 @@ include::src/test/resources/logback-mermaid.xml[]
 ----
 
 This `logback-mermaid.xml`
-- remove noise in output and only prints the raw message
-- only outputs logs from the logger called `"mermaid"`
-  - to declare this logger in java code : `Logger mermaidLog = LoggerFactory.getLogger("mermaid");`
+
+* remove noise in output and only prints the raw message
+* only outputs logs from the logger called `"mermaid"`
+** to declare this logger in java code : `Logger mermaidLog = LoggerFactory.getLogger("mermaid");`
 
 Why logging mermaid in `"TRACE"` log level?
 
