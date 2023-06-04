@@ -1,0 +1,152 @@
+= Living documentation : sequence diagram as code
+
+Sample of code that generates mermaidjs sequence diagram.
+During the execution of the code, if a specific logger configuration is enabled, the program will output logs that can be interpreted as sequence diagram in mermaidjs.
+
+== Running tests
+
+=== Run tests with mermaid output
+
+Using this maven profile (`mermaid`), tests log output should show some mermaid code.
+You can then copy and paste it in https://mermaid.live/edit
+
+[source,shell]
+----
+mvn test -Pmermaid
+----
+
+Example of output :
+
+[source]
+----
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running fr.baldir.UpdatingContactIbanTest
+
+%% Updating contact's IBAN : when iban is valid
+
+sequenceDiagram
+autonumber
+Front -->> MyApi : PATCH /00001/fiche-contact, <br/> contact id : 00001, iban : FR7600000000001
+MyApi -->> Ficoba : POST https://ficobaUrl/validation-route <br/> iban : FR7600000000001
+Ficoba -->> MyApi : FR7600000000001 exists
+MyApi -->> Insurers : GET https://insurersUrl/contacts/00001
+Insurers -->> MyApi : Informations assuré : 00001
+MyApi -->> ContactsService : PUT /00001/fiche-contact
+ContactsService -->> MyApi : 200 OK
+MyApi -->> Front : 200 OK
+
+%% Updating contact's IBAN : when iban is not found
+
+sequenceDiagram
+autonumber
+Front -->> MyApi : PATCH /00001/fiche-contact, <br/> contact id : 00001, iban : FR7600000000000
+MyApi -->> Ficoba : POST https://ficobaUrl/validation-route <br/> iban : FR7600000000000
+Ficoba -->> MyApi : FR7600000000000 does not exist
+MyApi -->> Front : 400 Bad Request
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.428 s - in fr.baldir.UpdatingContactIbanTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+----
+
+
+=== Run as regular tests
+
+[source,shell]
+----
+mvn test
+----
+
+Example of output
+
+[source]
+----
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running fr.baldir.UpdatingContactIbanTest
+20:07:05.258 [main] INFO  fr.baldir.UpdatingContactIbanTest -- Updating contact's IBAN : when iban is valid. Log visible in 'normal' test runs but not in 'mermaid' run
+20:07:05.268 [main] INFO  fr.baldir.UpdatingContactIbanTest -- Updating contact's IBAN : when iban is not found. Log visible in 'normal' test runs but not in 'mermaid' run
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 s - in fr.baldir.UpdatingContactIbanTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+----
+
+== Writing diagrams
+
+Example of use
+
+1. Add a logger named "mermaid"
+2. trace before and after call to external service
+
+Here, we traced in `Insurances.java`
+
+[source,java]
+----
+include::src/main/java/fr/baldir/services/Insurances.java[tag=example_of_mermaid_log]
+----
+
+In tests, you can add diagram headers
+
+[source,java]
+----
+include::src/test/java/fr/baldir/UpdatingContactIbanTest.java[tag=test_setup_for_mermaid_headers]
+----
+
+Then, running tests will output desired diagrams.
+
+[source,java]
+----
+include::src/test/java/fr/baldir/UpdatingContactIbanTest.java[tag=test_run]
+----
+
+Generated diagram
+
+[source,mermaid]
+----
+%% Updating contact's IBAN : when iban is valid
+
+sequenceDiagram
+autonumber
+Front -->> MyApi : PATCH /00001/fiche-contact, <br/> contact id : 00001, iban : FR7600000000001
+MyApi -->> Ficoba : POST https://ficobaUrl/validation-route <br/> iban : FR7600000000001
+Ficoba -->> MyApi : FR7600000000001 exists
+MyApi -->> Insurers : GET https://insurersUrl/contacts/00001
+Insurers -->> MyApi : Informations assuré : 00001
+MyApi -->> ContactsService : PUT /00001/fiche-contact
+ContactsService -->> MyApi : 200 OK
+MyApi -->> Front : 200 OK
+----
+
+=== Logging configuration
+
+In this example we have 2 separate Logback logger configurations.
+- A standard one : `src/test/resources/logback-test.xml`
+- A specific for mermaid diagram generation : `src/test/resources/logback-mermaid.xml`
+
+`logback-mermaid.xml`
+
+[source,xml]
+----
+include::src/test/resources/logback-mermaid.xml[]
+----
+
+This `logback-mermaid.xml`
+- remove noise in output and only prints the raw message
+- only outputs logs from the logger called `"mermaid"`
+  - to declare this logger in java code : `Logger mermaidLog = LoggerFactory.getLogger("mermaid");`
+
+Why logging mermaid in `"TRACE"` log level?
+
+Because in the standard logger, we may not want to output the mermaid logs.
+We could filter them out if we want, or enable them in production.
+

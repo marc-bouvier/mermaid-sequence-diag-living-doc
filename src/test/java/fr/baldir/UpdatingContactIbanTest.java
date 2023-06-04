@@ -13,12 +13,13 @@ import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// # tag::test_setup_for_mermaid_headers[]
 @DisplayName("Updating contact's IBAN")
 @IndicativeSentencesGeneration(separator = " : ", generator = DisplayNameGenerator.ReplaceUnderscores.class)
 public class UpdatingContactIbanTest {
-    private final Logger mermaidLog = LoggerFactory.getLogger("mermaid");
-    private final Logger log = LoggerFactory.getLogger(UpdatingContactIbanTest.class);
+    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
 
+    private Logger log = LoggerFactory.getLogger(UpdatingContactIbanTest.class);
     private FicheContactController ficheContactController;
 
     @BeforeEach
@@ -26,14 +27,19 @@ public class UpdatingContactIbanTest {
         ficheContactController = createSut();
 
         log.info(testInfo.getDisplayName() + ". Log visible in 'normal' test runs but not in 'mermaid' run");
+
+        // Some layout and diagram title as %% mermaid comment
         mermaidLog.trace("");
         mermaidLog.trace("%% " + testInfo.getDisplayName());
         mermaidLog.trace("");
 
+        // Mermaid diagram headers and options
         mermaidLog.trace("sequenceDiagram");
         mermaidLog.trace("autonumber");
     }
+    // # end::test_setup_for_mermaid_headers[]
 
+    // # tag::test_run[]
     @Test
     void when_iban_is_valid() {
         var contactId = "00001";
@@ -41,6 +47,7 @@ public class UpdatingContactIbanTest {
 
         ficheContactController.patchFicheContact(new FicheContactPatch(contactId, iban));
     }
+    // # end::test_run[]
 
     @Test
     void when_iban_is_not_found() {
