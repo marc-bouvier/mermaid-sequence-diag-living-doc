@@ -646,9 +646,17 @@ MyApi --&gt;&gt; Front : 200 OK</code></pre>
 <div class="sect2">
 <h3 id="_logging_configuration">Logging configuration</h3>
 <div class="paragraph">
-<p>In this example we have 2 separate Logback logger configurations.
-- A standard one : <code>src/test/resources/logback-test.xml</code>
-- A specific for mermaid diagram generation : <code>src/test/resources/logback-mermaid.xml</code></p>
+<p>In this example we have 2 separate Logback logger configurations</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A standard one : <code>src/test/resources/logback-test.xml</code></p>
+</li>
+<li>
+<p>A specific for mermaid diagram generation : <code>src/test/resources/logback-mermaid.xml</code></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p><code>logback-mermaid.xml</code></p>
@@ -687,10 +695,24 @@ MyApi --&gt;&gt; Front : 200 OK</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This <code>logback-mermaid.xml</code>
-- remove noise in output and only prints the raw message
-- only outputs logs from the logger called <code>"mermaid"</code>
-  - to declare this logger in java code : <code>Logger mermaidLog = LoggerFactory.getLogger("mermaid");</code></p>
+<p>This <code>logback-mermaid.xml</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>remove noise in output and only prints the raw message</p>
+</li>
+<li>
+<p>only outputs logs from the logger called <code>"mermaid"</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>to declare this logger in java code : <code>Logger mermaidLog = LoggerFactory.getLogger("mermaid");</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Why logging mermaid in <code>"TRACE"</code> log level?</p>
@@ -705,7 +727,7 @@ We could filter them out if we want, or enable them in production.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-06-04 20:56:12 +0200
+Last updated 2023-06-04 20:57:38 +0200
 </div>
 </div>
 </body>
