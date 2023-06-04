@@ -109,9 +109,9 @@ Then, running tests will output desired diagrams.
 include::src/test/java/fr/baldir/UpdatingContactIbanTest.java[tag=test_run]
 ----
 
-Generated diagram
+Generated diagram code
 
-[source,mermaid]
+[source, mermaid]
 ----
 %% Updating contact's IBAN : when iban is valid
 
@@ -126,6 +126,26 @@ MyApi -->> ContactsService : PUT /00001/fiche-contact
 ContactsService -->> MyApi : 200 OK
 MyApi -->> Front : 200 OK
 ----
+
+Rendered diagram
+
+
+[mermaid]
+----
+%% Updating contact's IBAN : when iban is valid
+
+sequenceDiagram
+autonumber
+Front -->> MyApi : PATCH /00001/fiche-contact, <br/> contact id : 00001, iban : FR7600000000001
+MyApi -->> Ficoba : POST https://ficobaUrl/validation-route <br/> iban : FR7600000000001
+Ficoba -->> MyApi : FR7600000000001 exists
+MyApi -->> Insurers : GET https://insurersUrl/contacts/00001
+Insurers -->> MyApi : Informations assuré : 00001
+MyApi -->> ContactsService : PUT /00001/fiche-contact
+ContactsService -->> MyApi : 200 OK
+MyApi -->> Front : 200 OK
+----
+
 
 === Logging configuration
 
