@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Ficoba est le Fichier des comptes bancaires Français.
  */
 public class Ficoba {
-    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final     Logger mermaidLog = LoggerFactory.getLogger("mermaid");
 
     public BankAccountInformations loadBankAccountInformations(String iban) {
         String ficobaUrl = "https://ficobaUrl/validation-route";

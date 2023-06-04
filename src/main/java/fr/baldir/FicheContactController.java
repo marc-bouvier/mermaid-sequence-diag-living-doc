@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class FicheContactController {
 
-    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
 
     private final FichesContact fichesContact;
     private final IbanValidation ibanValidation;

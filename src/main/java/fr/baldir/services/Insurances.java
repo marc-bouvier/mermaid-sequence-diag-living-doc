@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Insurances {
-    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final   Logger mermaidLog = LoggerFactory.getLogger("mermaid");
 
     public InsuredDetails loadInsuredDetails(String contactId) {
         var insurersUrl = "https://insurersUrl/contacts/" + contactId;

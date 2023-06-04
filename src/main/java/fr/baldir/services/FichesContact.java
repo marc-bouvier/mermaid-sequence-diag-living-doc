@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FichesContact {
-    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final Logger mermaidLog = LoggerFactory.getLogger("mermaid");
 
     public void updateContactIban(String contactId, String iban) {
         mermaidLog.trace("MyApi -->> ContactsService : PUT /{}/fiche-contact", contactId);

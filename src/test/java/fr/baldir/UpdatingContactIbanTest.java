@@ -16,16 +16,16 @@ import org.slf4j.LoggerFactory;
 @DisplayName("Updating contact's IBAN")
 @IndicativeSentencesGeneration(separator = " : ", generator = DisplayNameGenerator.ReplaceUnderscores.class)
 public class UpdatingContactIbanTest {
-    Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final Logger mermaidLog = LoggerFactory.getLogger("mermaid");
+    private final Logger log = LoggerFactory.getLogger(UpdatingContactIbanTest.class);
 
-    private Logger log = LoggerFactory.getLogger(UpdatingContactIbanTest.class);
     private FicheContactController ficheContactController;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         ficheContactController = createSut();
 
-        log.info( testInfo.getDisplayName()+ ". Log visible in 'normal' test runs but not in 'mermaid' run");
+        log.info(testInfo.getDisplayName() + ". Log visible in 'normal' test runs but not in 'mermaid' run");
         mermaidLog.trace("");
         mermaidLog.trace("%% " + testInfo.getDisplayName());
         mermaidLog.trace("");
