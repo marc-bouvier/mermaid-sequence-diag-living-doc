@@ -25,7 +25,7 @@ public class UpdatingContactIbanTest {
     void setUp(TestInfo testInfo) {
         ficheContactController = createSut();
 
-        log.info("Log visible in 'normal' test runs but not in 'mermaid' run");
+        log.info( testInfo.getDisplayName()+ ". Log visible in 'normal' test runs but not in 'mermaid' run");
         mermaidLog.trace("");
         mermaidLog.trace("%% " + testInfo.getDisplayName());
         mermaidLog.trace("");
